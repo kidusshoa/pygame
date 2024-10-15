@@ -58,8 +58,7 @@ class projectile():
         pygame.draw.circle(screen, self.color, (self.x, self.y),self.radius)      
 
 class enemy():
-    
-    
+       
     def __init__(self, x, y, width, height, end):
         self.x = x
         self.y = y
@@ -70,6 +69,7 @@ class enemy():
         self.path = [x, end]
         
     def draw(self, screen):
+        self.move()
         if self.walkCount +1 >= 27:
             self.walkCount = 0
          
@@ -81,9 +81,10 @@ class enemy():
                  self.walkCount += 1
                  
     def move(self):
+        
         if self.vel > 0:
             if self.x < self.path[1] - self.width:
-                self.vel += self.vel
+                self.x += self.vel
             else:
                 self.vel = self.vel * -1
                 self.x += self.vel
@@ -100,13 +101,13 @@ def DrawInGameloop():
     screen.blit(bg_img, (0,0))
     clock.tick(25)
     soldier.draw(screen)
-    enemy.draw(screen)
+    Enemy.draw(screen)
     for bullet in bullets:
         bullet.draw(screen)
     pygame.display.flip()
 
 soldier = player(50, 435, 64, 64)
-enemy = enemy(0, 410, 64, 64, w_width)
+Enemy = enemy(0, w_height - 64, 64, 64, w_width)
 bullets = []
 shoot = 0
 done = True
