@@ -13,6 +13,8 @@ bg_img = pygame.transform.scale(bg_img, (w_width, w_height))
 walkRight = [pygame.image.load(f'soldier/{i}.png') for i in range(1,10)]
 walkLeft = [pygame.image.load(f'soldier/L{i}.png') for i in range(1,10)]
 char = pygame.image.load('soldier/standing.png')
+moveRight = [pygame.image.load(f'enemy/R{i}.png') for i in range(1,10)]
+moveLeft = [pygame.image.load(f'enemy/L{i}.png') for i in range(1,10)]
 
 class player():
     
@@ -56,8 +58,7 @@ class projectile():
         pygame.draw.circle(screen, self.color, (self.x, self.y),self.radius)      
 
 class enemy():
-    walkRight = [pygame.image.load(f'enemy/R{i}.png') for i in range(1,10)]
-    walkLeft = [pygame.image.load(f'enemy/L{i}.png') for i in range(1,10)]
+    
     
     def __init__(self, x, y, width, height, end):
         self.x = x
@@ -73,10 +74,10 @@ class enemy():
             self.walkCount = 0
          
         if self.vel > 0:
-                 screen.blit(walkRight [self.walkCount//3], (self.x,self.y))
+                 screen.blit(moveRight [self.walkCount//3], (self.x,self.y))
                  self.walkCount += 1
         else:
-                 screen.blit(walkLeft[self.walkCount//3], (self.x,self.y))
+                 screen.blit(moveLeft[self.walkCount//3], (self.x,self.y))
                  self.walkCount += 1
                  
     def move(self):
