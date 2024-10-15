@@ -5,7 +5,7 @@ w_width = 500
 w_height = 500
 screen = pygame.display.set_mode((w_width,w_height))
 
-pygame.display.set_caption("Adding enemies")
+pygame.display.set_caption("Collision Detection")
 
 clock = pygame.time.Clock()
 bg_img = pygame.image.load("../basic/img/bg.png")
@@ -30,6 +30,8 @@ class player():
         self.right = False
         self.walkCount = 0
         self.standing = True
+        self.hitbox = (self.x, self.y, self.width, self.height)
+        
     def draw(self, screen):
         if self.walkCount +1 >= 27:
             self.walkCount = 0
@@ -45,6 +47,9 @@ class player():
                 screen.blit(walkRight[0], (self.x, self.y))
             else:
                 screen.blit(walkLeft[0], (self.x, self.y))
+        
+        self.hitbox = (self.x, self.y, self.width, self.height)
+        pygame.draw.rect(screen, "black", self.hitbox, 2)
 
 class projectile():
     def __init__(self, x, y, radius, color, direction):
