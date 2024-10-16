@@ -72,8 +72,8 @@ class enemy():
         self.walkCount = 0
         self.vel = 3
         self.path = [x, end]
-        self.hitbox = (self.x, self.y, self.width, self.height)
-        pygame.draw.rect(screen, "black", self.hitbox, 2)
+        self.hitbox = (self.x + 20, self.y, self.width - 40, self.height - 4)
+       
         
     def draw(self, screen):
         self.move()
@@ -86,7 +86,7 @@ class enemy():
         else:
                  screen.blit(moveLeft[self.walkCount//3], (self.x,self.y))
                  self.walkCount += 1
-        self.hitbox = (self.x, self.y, self.width, self.height)
+        self.hitbox = (self.x + 20, self.y, self.width - 40, self.height - 4)
         pygame.draw.rect(screen, "black", self.hitbox, 2)
                  
     def move(self):
@@ -131,6 +131,9 @@ while done:
         shoot = 0
     
     for bullet in bullets:
+        if bullet.y - bullet.radius < Enemy.hitbox[1] + Enemy.hitbox[3] and bullet.y + bullet.radius > Enemy.hitbox[1]:
+            if bullet.x + bullet.radius > Enemy.hitbox[0] and bullet.radius < Enemy.hitbox[2] and bullet.x + bullet.radius > Enemy.hitbox[0] + Enemy.hitbox[2]:
+               bullets.pop(bullets.index(bullet)) 
         if bullet.x < 500 and bullet.x > 0:
             bullet.x += bullet.vel
         else:
