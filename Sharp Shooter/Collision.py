@@ -31,6 +31,8 @@ class player():
         self.walkCount = 0
         self.standing = True
         self.hitbox = (self.x, self.y, self.width, self.height)
+        self.hit = pygame.Rect(self.hitbox)
+        
         
     def draw(self, screen):
         if self.walkCount +1 >= 27:
@@ -49,7 +51,7 @@ class player():
                 screen.blit(walkLeft[0], (self.x, self.y))
         
         self.hitbox = (self.x, self.y, self.width, self.height)
-        pygame.draw.rect(screen, "black", self.hitbox, 2)
+        self.hit = pygame.Rect(self.hitbox)
 
 class projectile():
     def __init__(self, x, y, radius, color, direction):
@@ -73,7 +75,7 @@ class enemy():
         self.vel = 3
         self.path = [x, end]
         self.hitbox = (self.x + 20, self.y, self.width - 40, self.height - 4)
-       
+        self.hit = pygame.Rect(self.hitbox)
         
     def draw(self, screen):
         self.move()
@@ -86,8 +88,8 @@ class enemy():
         else:
                  screen.blit(moveLeft[self.walkCount//3], (self.x,self.y))
                  self.walkCount += 1
-        self.hitbox = (self.x + 20, self.y, self.width - 40, self.height - 4)
-        pygame.draw.rect(screen, "black", self.hitbox, 2)
+        self.hitbox = (self.x + 20, self.y, self.width - 40, self.height - 4)        
+        self.hit = pygame.Rect(self.hitbox)
                  
     def move(self):
         
@@ -124,6 +126,9 @@ while done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = False
+    
+    if soldier.hit.colliderect(Enemy.hit):
+        Enemy.vel = Enemy.vel * -1
     
     if shoot > 0:
         shoot += 1
