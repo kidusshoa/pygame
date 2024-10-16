@@ -72,6 +72,8 @@ class enemy():
         self.walkCount = 0
         self.vel = 3
         self.path = [x, end]
+        self.hitbox = (self.x, self.y, self.width, self.height)
+        pygame.draw.rect(screen, "black", self.hitbox, 2)
         
     def draw(self, screen):
         self.move()
@@ -84,6 +86,8 @@ class enemy():
         else:
                  screen.blit(moveLeft[self.walkCount//3], (self.x,self.y))
                  self.walkCount += 1
+        self.hitbox = (self.x, self.y, self.width, self.height)
+        pygame.draw.rect(screen, "black", self.hitbox, 2)
                  
     def move(self):
         
